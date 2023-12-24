@@ -178,10 +178,10 @@ EOF
 # ...
 ```
 
-Create materialized view.
+## Create materialized view
 
 ```sql
-sqlite> CREATE TEMP VIEW IF NOT EXISTS exists_in_location_view AS
+sqlite> CREATE VIEW IF NOT EXISTS exists_in_location_view AS
 SELECT 
     it.InstanceType, 
     loc.Location, 
@@ -198,7 +198,11 @@ LEFT JOIN
 ORDER BY 
     loc.Location,
     it.InstanceType;
+```
 
+(Example query) Check t3 instance type offerings in use1-az3.
+
+```sql
 sqlite> .headers ON
 sqlite> .separator "\t"
 sqlite> SELECT Location, InstanceType, ExistsInLocation FROM temp.exists_in_location_view WHERE Location = 'use1-az3' and InstanceType LIKE 't3.%';
