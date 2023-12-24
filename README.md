@@ -115,7 +115,7 @@ EOF
 Created db has two tables.
 
 ```sql
-# sqlite> .schema
+sqlite> .schema
 CREATE TABLE az (
             ZoneId TEXT NOT NULL PRIMARY KEY,
             ZoneName TEXT NOT NULL,
