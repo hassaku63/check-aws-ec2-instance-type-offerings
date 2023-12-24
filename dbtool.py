@@ -210,7 +210,7 @@ def main():
         help='source file',
     )
     import_parser.add_argument(
-        '-k', '--with-no-header',
+        '--with-no-header',
         dest='with_no_header',
         action='store_true',
         help='either source file has a header line (at first line) or not',
