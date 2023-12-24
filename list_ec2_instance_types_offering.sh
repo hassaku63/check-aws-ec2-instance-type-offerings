@@ -8,6 +8,7 @@ append_header=0
 function show_help() {
   echo "Usage: list_ec2_instance_types_offering.sh -r <region> [-f <csv|tsv>]"
   echo "  -r region"
+  echo "  -a append header"
   echo "  -h help"
 }
 

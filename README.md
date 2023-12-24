@@ -37,6 +37,7 @@ Fetch instance type offerings.
 $ ./list_ec2_instance_types_offering.sh -h
 Usage: list_ec2_instance_types_offering.sh -r <region> [-f <csv|tsv>]
   -r region
+  -a append header
   -h help
 ```
 
