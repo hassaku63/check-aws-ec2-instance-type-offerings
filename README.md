@@ -43,7 +43,71 @@ Usage: list_ec2_instance_types_offering.sh -r <region> [-f <csv|tsv>]
 
 ```bash
 $ INSTANCE_TYPE_OFFERING_FILE=instance_type_offering.tsv
-$ ./list_ec2_instance_types_offering.sh -r ${REGION} > ${INSTANCE_TYPE_OFFERING_FILE}
+$ ./list_ec2_instance_types_offering.sh -a -r ${REGION} > ${INSTANCE_TYPE_OFFERING_FILE}
+```
+
+### Create SQLite DB
+
+Init db
+
+```bash
+DB_FILE=instance_type_offerings.db
+```
+
+```bash
+$ python dbtool.py init -h                                                 
+usage: dbtool.py init [-h] [-d DATABASE]
+
+options:
+  -h, --help            show this help message and exit
+  -d DATABASE, --database DATABASE
+                        path to the database (default: instance_type_offerings.db)
+```
+
+```bash
+$ python dbtool.py init -d ${DB_FILE}
+```
+
+Import data into db.
+
+```bash
+$ python dbtool.py import -h
+usage: dbtool.py import [-h] [-d DATABASE] [-t {instance_type_offerings,az}] -f SOURCE_FILE [-k] [--fmt {tsv,csv}]
+
+If -k or --skip-header is specified, the first line of the source file is skipped.
+In this case, the header line must be specified as follows:
+  instance_type: InstanceType, LocationType, Location
+  az           : ZoneId, ZoneName, RegionName, ZoneType, State
+
+options:
+  -h, --help            show this help message and exit
+  -d DATABASE, --database DATABASE
+                        path to the database (default: instance_type_offerings.db)
+  -t {instance_type_offerings,az}, --table {instance_type_offerings,az}
+                        table name
+  -f SOURCE_FILE, --source-file SOURCE_FILE
+                        source file
+  --with-no-header  either source file has a header line (at first line) or not
+  --fmt {tsv,csv}, --format {tsv,csv}
+                        format of the source file (default: tsv)
+```
+
+```bash
+$ python dbtool.py import -d ${DB_FILE} -t az -f ${AZ_FILE}
+
+$ python dbtool.py import -d ${DB_FILE} -t instance_type_offerings -f ${INSTANCE_TYPE_OFFERING_FILE}
+```
+
+Check imported data.
+
+```bash
+$ sqlite3 ${DB_FILE} << EOF
+SELECT COUNT(*) FROM az;
+EOF
+
+$ sqlite3 ${DB_FILE} << EOF
+SELECT COUNT(*) FROM instance_type_offerings;
+EOF
 ```
 
 ### Query
