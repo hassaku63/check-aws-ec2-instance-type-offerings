@@ -245,6 +245,8 @@ EOF
 
 ## Create materialized view
 
+For convenience, I will create a materialized view with the same contents as the above CROSS JOIN statement.
+
 ```sql
 sqlite> CREATE VIEW IF NOT EXISTS exists_in_location_view AS
 SELECT 
@@ -265,7 +267,9 @@ ORDER BY
     it.InstanceType;
 ```
 
-(Example query) Check t3 instance type offerings in use1-az3.
+### Example query
+
+Check t3 instance type offerings in `use1-az3`.
 
 ```sql
 sqlite> .headers ON
